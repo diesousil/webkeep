@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogsTable extends Migration
+class CreateDomainsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,20 @@ class CreateLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('logs', function (Blueprint $table) {
+        Schema::create('domains', function (Blueprint $table) {
+			
             $table->bigIncrements('id');
             $table->unsignedBigInteger('request_id');
-            $table->unsignedBigInteger('download_id');
-				$table->unsignedBigInteger('queue_id');
-				$table->text('content');
-     			
-				$table->foreign('request_id')->references('id')->on('requests');
-				$table->foreign('download_id')->references('id')->on('downloads');
-				$table->foreign('queue_id')->references('id')->on('queue');
-				
+			
+			$table->string('protocol');
+			$table->string('url');
+			
+			$table->foreign('request_id')->references('id')->on('requests');
+			
             $table->timestamps();
+			$table->softDeletes();
+            $table->engine = 'InnoDB';
+			
         });
     }
 
@@ -35,6 +37,6 @@ class CreateLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('domains');
     }
 }
