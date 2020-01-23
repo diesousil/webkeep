@@ -18,7 +18,7 @@ class CreateLogsTable extends Migration
             $table->unsignedBigInteger('request_id');
             $table->unsignedBigInteger('download_id');
 				$table->unsignedBigInteger('queue_id');
-				$table->text('content');
+				$table->text('description');
      			
 				$table->foreign('request_id')->references('id')->on('requests');
 				$table->foreign('download_id')->references('id')->on('downloads');
